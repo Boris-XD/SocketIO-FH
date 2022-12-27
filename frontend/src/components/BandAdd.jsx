@@ -1,12 +1,15 @@
-import React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SocketContext } from "../context/SocketContext";
 
-const BandAdd = ({ addBand }) => {
+const BandAdd = () => {
+  
+  const { socket } = useContext(SocketContext);
   const [newBandName, setNewBandName] = useState("");
+
   const onSubmit = (event) => {
     event.preventDefault();
     if (newBandName.trim().length > 3){
-      addBand(newBandName)
+      socket.emit("add-new-band", newBandName);
       setNewBandName('');
     }
   };
